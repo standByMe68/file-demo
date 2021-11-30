@@ -7,6 +7,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.net.ftp.FtpClient;
 
 import java.io.*;
 
@@ -20,20 +21,13 @@ public class FTPHandler implements BaseFileHandler {
         FTPInfo ftpInfo = (FTPInfo) baseInfo;
         //记录当前是多少字节
         long fileCurrSize = 0;
-
         //获取当前文件读取长度
         Long historyFileSize = FileConstant.fileReadNumMap.get(ftpInfo.getFileName());
         if (historyFileSize == null) {
             historyFileSize = 0L;
         }
-        // 配置FTP客户端
-        FTPClient ftpClient=new FTPClient();
-        // 连接FTP服务器
-        ftpClient.connect(ftpInfo.getHost(), ftpInfo.getPort());
-        // 登录FTP服务器(非游客模式)
-        if (FileConstant.LOGIN_USER.equals(ftpInfo.getLoginType())) {
-            ftpClient.login(ftpInfo.getUsername(), ftpInfo.getPassword());
-        }
+        // 获取FTP客户端对象
+        FTPClient ftpClient = getClient(ftpInfo);
         // 判断是否连接成功
         if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode()))
         {
@@ -61,5 +55,18 @@ public class FTPHandler implements BaseFileHandler {
 
             ftpClient.disconnect();
         }
+    }
+
+
+    public FTPClient getClient(FTPInfo ftpInfo) throws IOException {
+        // 配置FTP客户端
+        FTPClient ftpClient=new FTPClient();
+        // 连接FTP服务器
+        ftpClient.connect(ftpInfo.getHost(), ftpInfo.getPort());
+        // 登录FTP服务器(非游客模式)
+        if (FileConstant.LOGIN_USER.equals(ftpInfo.getLoginType())) {
+            ftpClient.login(ftpInfo.getUsername(), ftpInfo.getPassword());
+        }
+        return ftpClient;
     }
 }

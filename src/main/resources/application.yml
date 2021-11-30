@@ -9,4 +9,5 @@ file:
   folder-path: /Demo/data
   # 类型选项可以是FTP或者SMB
   type: FTP
+  # 登录类型选项：USER/GUEST
   login-type: USER
