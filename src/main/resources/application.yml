@@ -1,0 +1,12 @@
+server:
+  port: 8999
+
+file:
+  host: sh.hc-yun.com
+  port: 6186
+  username: Mango-jianchengfeng
+  password: uc<5ay0U
+  folder-path: /Demo/data
+  # 类型选项可以是FTP或者SMB
+  type: FTP
+  login-type: USER
