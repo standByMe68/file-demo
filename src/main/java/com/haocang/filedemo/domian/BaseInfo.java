@@ -82,4 +82,17 @@ public class BaseInfo {
     public void setFolderPath(String folderPath) {
         this.folderPath = folderPath;
     }
+
+    @Override
+    public String toString() {
+        return "BaseInfo{" +
+                "host='" + host + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
+                ", folderPath='" + folderPath + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", loginType='" + loginType + '\'' +
+                '}';
+    }
 }

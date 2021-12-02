@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+@Deprecated
 public class NoneHandler implements BaseFileHandler{
     private static Logger logger = LoggerFactory.getLogger(NoneHandler.class);
 

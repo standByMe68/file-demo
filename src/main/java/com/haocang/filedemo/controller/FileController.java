@@ -9,6 +9,7 @@ import com.haocang.filedemo.domian.FTPInfo;
 import com.haocang.filedemo.domian.SMBInfo;
 import com.haocang.filedemo.handler.BaseFileHandler;
 import com.haocang.filedemo.handler.FTPHandler;
+import com.haocang.filedemo.handler.NoFindFileReadTypeException;
 import com.haocang.filedemo.handler.SMBHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,12 @@ public class FileController {
      * @return
      */
     @GetMapping("/read")
-    public String readFile(@RequestParam(value = "path") String fileName){
+    public String readFile(@RequestParam(value = "path") String fileName) throws NoFindFileReadTypeException {
 
         if (FileConstant.fileReadNumMap.size() < 10) {
             //获取读取文件所需要的信息
             BaseInfo info = FileConstant.getInfo(fileConfig, fileName);
+            logger.info("当前读取文件信息:{}",info);
             //获取文件处理器
             BaseFileHandler build = FileHandlerFactory.build(info.getType());
             //启动一个线程每10秒钟读取新增的日志信息

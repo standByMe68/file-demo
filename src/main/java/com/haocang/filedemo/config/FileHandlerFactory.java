@@ -1,9 +1,6 @@
 package com.haocang.filedemo.config;
 
-import com.haocang.filedemo.handler.BaseFileHandler;
-import com.haocang.filedemo.handler.FTPHandler;
-import com.haocang.filedemo.handler.NoneHandler;
-import com.haocang.filedemo.handler.SMBHandler;
+import com.haocang.filedemo.handler.*;
 
 /**
  * 文件读取工厂
@@ -11,18 +8,15 @@ import com.haocang.filedemo.handler.SMBHandler;
  */
 public class FileHandlerFactory {
 
-    public static BaseFileHandler build(String protocolType) {
-
+    public static BaseFileHandler build(String protocolType) throws NoFindFileReadTypeException {
         switch (protocolType) {
             case FileConstant.FILE_FTP:
                 return new FTPHandler();
             case FileConstant.FILE_SMB:
                 return new SMBHandler();
             default:
-                return new NoneHandler();
+                throw new NoFindFileReadTypeException(protocolType);
         }
-
-
     }
 
 }

@@ -29,8 +29,7 @@ public class FTPHandler implements BaseFileHandler {
         // 获取FTP客户端对象
         FTPClient ftpClient = getClient(ftpInfo);
         // 判断是否连接成功
-        if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode()))
-        {
+        if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
             //设置文件获取模式为被动式模式
             ftpClient.enterLocalPassiveMode();
             // 判断当前目录路径是否存在并且有权限
@@ -44,7 +43,7 @@ public class FTPHandler implements BaseFileHandler {
                 while ((line = bufferedReader.readLine()) != null) {
                     fileCurrSize++;
                     if (fileCurrSize > historyFileSize) {
-                        logger.info("追加数据:{}",line);
+                        logger.info("追加数据:{}", line);
                         stringBuilder.append(line + "");
                     }
                 }
@@ -54,6 +53,8 @@ public class FTPHandler implements BaseFileHandler {
             }
 
             ftpClient.disconnect();
+        } else {
+            logger.info("连接FTP服务器失败");
         }
     }
 
