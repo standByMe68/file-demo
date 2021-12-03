@@ -59,14 +59,6 @@ public class SMBHandler implements BaseFileHandler{
         }, 0, 10, TimeUnit.SECONDS);
     }
 
-    private static byte[] ByteArrayTobyte(Byte[] bytes) {
-        byte[] byteArray = new byte[bytes.length];
-        for (int i = 0; i < bytes.length; i++) {
-            byteArray[i] = bytes[i];
-        }
-        return byteArray;
-    }
-
     @Override
     public void readFileAdditionalContent(BaseInfo baseInfo) throws IOException {
 
@@ -100,7 +92,7 @@ public class SMBHandler implements BaseFileHandler{
                 if (result.size() > 0) {
                     Byte[] bytes = new Byte[result.size()];
                     result.toArray(bytes);
-                    byte[] bytes1 = ByteArrayTobyte(bytes);
+                    byte[] bytes1 = ByteHandler.ByteArrayTobyte(bytes);
                     logger.info("追加数据:" + new String(bytes1));
                     FileConstant.fileReadNumMap.put(smbInfo.getFileName(), readNum);
                 }

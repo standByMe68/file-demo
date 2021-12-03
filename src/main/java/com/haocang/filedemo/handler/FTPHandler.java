@@ -7,9 +7,9 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.net.ftp.FtpClient;
 
 import java.io.*;
+
 
 public class FTPHandler implements BaseFileHandler {
 
@@ -36,7 +36,6 @@ public class FTPHandler implements BaseFileHandler {
             if (ftpClient.changeWorkingDirectory(ftpInfo.getFolderPath())) {
                 // 简历输入流，根据指定名称获取指定文件
                 InputStream inputStream = ftpClient.retrieveFileStream(ftpInfo.getFolderPath() + "/" + ftpInfo.getFileName());
-                // 设置编码格式
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "GBK"));
                 String line = null;
                 StringBuilder stringBuilder = new StringBuilder(150);
@@ -48,6 +47,25 @@ public class FTPHandler implements BaseFileHandler {
                     }
                 }
                 FileConstant.fileReadNumMap.put(ftpInfo.getFileName(), fileCurrSize);
+                /* // 设置编码格式
+                byte buffer[] = new byte[1];
+                List<Byte> result = new ArrayList<>();
+                String line = null;
+                StringBuilder stringBuilder = new StringBuilder(150);
+                while ((inputStream.read(buffer)) != -1) {
+                    fileCurrSize++;
+                    if (fileCurrSize > historyFileSize) {
+                        result.add(buffer[0]);
+                    }
+                }
+
+                if (result.size() > 0) {
+                    Byte[] bytes = new Byte[result.size()];
+                    result.toArray(bytes);
+                    byte[] bytes1 = ByteHandler.ByteArrayTobyte(bytes);
+                    logger.info("追加数据:" + new String(bytes1));
+                    FileConstant.fileReadNumMap.put(ftpInfo.getFileName(), fileCurrSize);
+                }*/
             } else {
                 logger.info("当前目录不存在");
             }
