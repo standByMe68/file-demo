@@ -7,10 +7,7 @@ import com.haocang.filedemo.config.FileHandlerFactory;
 import com.haocang.filedemo.domian.BaseInfo;
 import com.haocang.filedemo.domian.FTPInfo;
 import com.haocang.filedemo.domian.SMBInfo;
-import com.haocang.filedemo.handler.BaseFileHandler;
-import com.haocang.filedemo.handler.FTPHandler;
-import com.haocang.filedemo.handler.NoFindFileReadTypeException;
-import com.haocang.filedemo.handler.SMBHandler;
+import com.haocang.filedemo.handler.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +34,25 @@ public class FileController {
 
     /**
      * 读取配置文件中的追加文件
-     * @param fileName
+     * @param fileSuffix
      * @return
      */
     @GetMapping("/read")
-    public String readFile(@RequestParam(value = "path") String fileName) throws NoFindFileReadTypeException {
+    public String readFile(@RequestParam(value = "fileSuffix") String fileSuffix) throws NoFindFileReadTypeException {
 
         if (FileConstant.fileReadNumMap.size() < 10) {
             //获取读取文件所需要的信息
-            BaseInfo info = FileConstant.getInfo(fileConfig, fileName);
+            BaseInfo info = FileConstant.getInfo(fileConfig, fileSuffix);
             logger.info("当前读取文件信息:{}",info);
             //获取文件处理器
-            BaseFileHandler build = FileHandlerFactory.build(info.getType());
+            BaseFileHandler build = FileHandlerFactory.build(info.getAgreementType());
             //启动一个线程每10秒钟读取新增的日志信息
             exec.scheduleWithFixedDelay(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         build.readFileAdditionalContent(info);
-                    } catch (IOException e) {
+                    } catch (IOException | FileNameWrongfulException | ResolverNoExistentExceptiom e) {
                         e.printStackTrace();
                     }
                 }

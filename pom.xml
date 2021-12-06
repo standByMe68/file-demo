@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.haocang</groupId>
     <artifactId>file-demo</artifactId>
-    <version>1.0.3.0001</version>
+    <version>1.0.3.0002</version>
     <name>file-demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -53,6 +53,10 @@
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
             <version>3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 

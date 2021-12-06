@@ -2,20 +2,21 @@ package com.haocang.filedemo.domian;
 
 public class BaseInfo {
 
-    public String host;
+    private String host;
 
-    public String username;
+    private String username;
 
-    public String password;
+    private String password;
 
-    public String type;
+    private String agreementType;
 
-    public String folderPath;
+    private String folderPath;
 
-    public String fileName;
+    private String fileSuffix;
 
-    public String loginType;
+    private String loginType;
 
+    private String serverEncode;
 
     public String getLoginType() {
         return loginType;
@@ -25,23 +26,17 @@ public class BaseInfo {
         this.loginType = loginType;
     }
 
-    public BaseInfo(String host, String username, String password, String type, String folderPath, String fileName,String loginType) {
+    public BaseInfo(String host, String username, String password, String agreementType, String folderPath, String fileSuffix,String loginType,String serverEncode) {
         this.host = host;
         this.username = username;
         this.password = password;
-        this.type = type;
+        this.agreementType = agreementType;
         this.folderPath = folderPath;
-        this.fileName = fileName;
+        this.fileSuffix = fileSuffix;
         this.loginType = loginType;
+        this.serverEncode = serverEncode;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 
     public String getHost() {
         return host;
@@ -67,13 +62,7 @@ public class BaseInfo {
         this.password = password;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getFolderPath() {
         return folderPath;
@@ -83,15 +72,39 @@ public class BaseInfo {
         this.folderPath = folderPath;
     }
 
+    public String getAgreementType() {
+        return agreementType;
+    }
+
+    public void setAgreementType(String agreementType) {
+        this.agreementType = agreementType;
+    }
+
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
+
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
+    }
+
+    public String getServerEncode() {
+        return serverEncode;
+    }
+
+    public void setServerEncode(String serverEncode) {
+        this.serverEncode = serverEncode;
+    }
+
     @Override
     public String toString() {
         return "BaseInfo{" +
                 "host='" + host + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", type='" + type + '\'' +
+                ", agreementType='" + agreementType + '\'' +
                 ", folderPath='" + folderPath + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", fileSuffix='" + fileSuffix + '\'' +
                 ", loginType='" + loginType + '\'' +
                 '}';
     }

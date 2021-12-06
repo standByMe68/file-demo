@@ -18,6 +18,13 @@ public class FileConstant {
     public static final String LOGIN_USER = "USER";
     public static final String LOGIN_GUEST = "GUEST";
 
+    //文件后缀名
+    public static final String CSV = "CSV";
+    public static final String TXT = "TXT";
+
+    //文件名
+    public static final String ALARM_FILE = "_RcamRunErrorLog.txt";
+
     // 文件名与文件已读取大小(FTP:d读取行数,SMB:字节大小)映射关系
     public static ConcurrentHashMap<String, Long> fileReadNumMap = new ConcurrentHashMap<>();
 
@@ -37,7 +44,7 @@ public class FileConstant {
     }
 
 
-    public static BaseInfo getInfo(FileConfig fileConfig,String fileName) {
+    public static BaseInfo getInfo(FileConfig fileConfig,String fileType) {
 
         String folderPath = fileConfig.getFolderPath();
         String host = fileConfig.getHost();
@@ -46,11 +53,12 @@ public class FileConstant {
         String port = fileConfig.getPort();
         String type = fileConfig.getType();
         String loginType = fileConfig.getLoginType();
+        String serverEncode = fileConfig.getServerEncode();
 
         if (FileConstant.FILE_FTP.equals(type)) {
-            return new FTPInfo(port, host, username, password, type, folderPath, fileName,loginType);
+            return new FTPInfo(port, host, username, password, type, folderPath, fileType,loginType,serverEncode);
         } else if (FileConstant.FILE_SMB.equals(type)) {
-            return new SMBInfo(host, username, password, type, folderPath, fileName, loginType);
+            return new SMBInfo(host, username, password, type, folderPath, fileType, loginType,serverEncode);
         }
         return null;
     }

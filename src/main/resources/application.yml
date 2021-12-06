@@ -11,3 +11,4 @@ file:
   type: FTP
   # 登录类型选项：USER/GUEST
   login-type: USER
+  server-encode: UTF-8

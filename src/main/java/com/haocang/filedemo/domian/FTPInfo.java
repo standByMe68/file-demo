@@ -2,7 +2,7 @@ package com.haocang.filedemo.domian;
 
 public class FTPInfo extends BaseInfo{
 
-    public Integer port;
+    private Integer port;
 
     public Integer getPort() {
         return port;
@@ -13,8 +13,8 @@ public class FTPInfo extends BaseInfo{
     }
 
 
-    public FTPInfo(String  port,String host, String username, String password, String type, String folderPath, String fileName,String loginType) {
-        super(host,username,password,type,folderPath,fileName,loginType);
+    public FTPInfo(String  port,String host, String username, String password, String type, String folderPath, String fileType,String loginType,String serverEncode) {
+        super(host,username,password,type,folderPath,fileType,loginType,serverEncode);
         this.port = Integer.valueOf(port);
     }
 }

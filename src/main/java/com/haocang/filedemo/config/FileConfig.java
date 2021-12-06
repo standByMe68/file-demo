@@ -21,6 +21,16 @@ public class FileConfig {
     private String port;
     @Value("${file.login-type}")
     private String loginType;
+    @Value("${file.server-encode}")
+    private String serverEncode;
+
+    public String getServerEncode() {
+        return serverEncode;
+    }
+
+    public void setServerEncode(String serverEncode) {
+        this.serverEncode = serverEncode;
+    }
 
     public String getLoginType() {
         return loginType;

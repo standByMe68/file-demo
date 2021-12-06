@@ -4,6 +4,7 @@ import com.haocang.filedemo.config.FileConstant;
 
 import com.haocang.filedemo.domian.BaseInfo;
 import com.haocang.filedemo.domian.SMBInfo;
+import com.haocang.filedemo.utils.FileUtil;
 import com.hierynomus.msdtyp.AccessMask;
 import com.hierynomus.mssmb2.SMB2CreateDisposition;
 import com.hierynomus.mssmb2.SMB2ShareAccess;
@@ -61,10 +62,11 @@ public class SMBHandler implements BaseFileHandler{
 
     @Override
     public void readFileAdditionalContent(BaseInfo baseInfo) throws IOException {
-
         SMBInfo smbInfo = (SMBInfo) baseInfo;
+        //获取名称路径
+        String filePath = FileUtil.getFilePath(baseInfo.getFolderPath(), baseInfo.getFileSuffix());
         //判断文件是否已经被读取过
-        Long readNum = FileConstant.chackFileRead(smbInfo.getFileName());
+        Long readNum = FileConstant.chackFileRead(filePath);
         SMBClient client = new SMBClient();
         try (Connection connection = client.connect(smbInfo.getHost())) {
 
@@ -77,7 +79,7 @@ public class SMBHandler implements BaseFileHandler{
             Session session = connection.authenticate(ac);
             // Connect to Share
             try (DiskShare share = (DiskShare) session.connectShare(smbInfo.getFolderPath())) {
-                com.hierynomus.smbj.share.File file = share.openFile(smbInfo.getFileName(), EnumSet.of(AccessMask.GENERIC_READ), null, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OPEN, null);
+                com.hierynomus.smbj.share.File file = share.openFile(filePath, EnumSet.of(AccessMask.GENERIC_READ), null, SMB2ShareAccess.ALL, SMB2CreateDisposition.FILE_OPEN, null);
                 InputStream inputStream = file.getInputStream();
                 byte buffer[] = new byte[1];
                 List<Byte> result = new ArrayList<>();
@@ -94,7 +96,7 @@ public class SMBHandler implements BaseFileHandler{
                     result.toArray(bytes);
                     byte[] bytes1 = ByteHandler.ByteArrayTobyte(bytes);
                     logger.info("追加数据:" + new String(bytes1));
-                    FileConstant.fileReadNumMap.put(smbInfo.getFileName(), readNum);
+                    FileConstant.fileReadNumMap.put(filePath, readNum);
                 }
             }
         } catch (Exception e) {
