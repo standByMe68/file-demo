@@ -64,7 +64,9 @@ public class FTPHandler implements BaseFileHandler {
                         if (fileCurrSize > historyFileSize) {
                             logger.info("追加数据:{}", line);
                             AlarmMqtt resolver =(AlarmMqtt) build.resolver(line);
-                            logger.info("解析数据:{}",resolver);
+                            if (Objects.nonNull(resolver)&&Objects.nonNull(resolver.getData())) {
+                                logger.info("解析数据:{}",resolver);
+                            }
                         }
                     }
                     FileConstant.fileReadNumMap.put(filePath, fileCurrSize);

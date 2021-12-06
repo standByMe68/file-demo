@@ -19,25 +19,37 @@ public class TxtResolver implements BaseResolver<AlarmMqtt> {
 
         AlarmMqtt alarmMqtt = new AlarmMqtt();
         if (StringUtils.isNotBlank(data)) {
-            doResolver(data,alarmMqtt);
+            alarmMqtt = doResolver(data,alarmMqtt);
         }
         return alarmMqtt;
     }
 
-    public void doResolver(String data,AlarmMqtt alarmMqtt) {
+    public  AlarmMqtt doResolver(String data,AlarmMqtt alarmMqtt) {
 
         String[] s = data.split(",");
         String hmsss = s[0].replaceAll("\\[|\\]", "");
-        String hms = hmsss.substring(0, hmsss.length() - 4);
-        String complateDate = DateUtil.getComplateDate(hms);
-        alarmMqtt.setTime(complateDate);
-        String[] s1 = s[1].trim().replaceAll("◇", "").split(" ");
-        String alarmCode = s1[1];
-        String alarmName = s1[0];
-        Data currDate = new Data(alarmName, "1");
-        Data[] datas = new Data[1];
-        datas[0] = currDate;
-        alarmMqtt.setData(datas);
+        if (hmsss.length() == 2) {
+            String hms = hmsss.substring(0, hmsss.length() - 4);
+            String complateDate = DateUtil.getComplateDate(hms);
+            alarmMqtt.setTime(complateDate);
+            String[] s1 = s[1].trim().replaceAll("◇", "").split(" ");
+            if (s1.length != 2) {
+                return null;
+            }
+            String alarmCode = s1[1];
+            String alarmName = s1[0];
+            Data currDate = new Data(alarmName, "1");
+            Data[] datas = new Data[1];
+            datas[0] = currDate;
+            alarmMqtt.setData(datas);
+        }
+        return alarmMqtt;
     }
+
+    /*public static void main(String[] args) {
+        AlarmMqtt alarmMqtt = new AlarmMqtt();
+        doResolver("[19:44:59:551], ◇设备恢复运行", alarmMqtt);
+        System.out.println("alarmMqtt = " + alarmMqtt);
+    }*/
 
 }
